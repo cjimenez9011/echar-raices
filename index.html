@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>echar raíces — Agencia de Publicidad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#312F4E;
+  --brand-lt:#4a4770;
+  /* defaults = tema CLARO (parte intermedia) */
+  --text:#26243d;
+  --muted:#6c6889;
+  --accent:#5b58a0;
+  --accent2:#7c79c8;
+  --glass:rgba(49,47,78,0.04);
+  --glass-brd:rgba(49,47,78,0.14);
+  --card-bg:#ffffff;
+  --shadow:0 18px 45px rgba(49,47,78,0.12);
+}
+/* zonas en índigo suave (no tan oscuro) */
+.dark{
+  --text:#ece9ff;
+  --muted:#b0adce;
+  --accent:#b7b4ec;
+  --accent2:#d6d4f6;
+  --glass:rgba(255,255,255,0.06);
+  --glass-brd:rgba(183,180,236,0.22);
+  --card-bg:rgba(255,255,255,0.05);
+  --shadow:0 22px 50px rgba(20,16,40,0.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#f4f3fb;color:var(--text);overflow-x:hidden;line-height:1.6}
+h1,h2,h3,.logo{font-family:'Space Grotesk',sans-serif;letter-spacing:-0.02em}
+a{color:inherit;text-decoration:none}
+
+/* nav */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 6vw;backdrop-filter:blur(14px);
+  background:transparent;border-bottom:1px solid transparent;transition:.4s;color:#fff;
+}
+nav.scrolled{background:rgba(255,255,255,.85);border-bottom:1px solid rgba(49,47,78,.12);box-shadow:0 6px 26px rgba(49,47,78,.08);color:#26243d}
+.logo{font-size:22px;font-weight:700;display:flex;align-items:center;gap:11px}
+.logo .mark{width:34px;height:34px;flex:none;display:block}
+.logo b{font-weight:700}
+.logo i{font-style:normal;font-weight:500;opacity:.75}
+.nav-links{display:flex;gap:34px;font-size:14px;font-weight:500}
+.nav-links a{opacity:.78;transition:.3s;position:relative}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-5px;width:0;height:2px;background:linear-gradient(90deg,#9d9ad6,#c6c4f2);transition:.3s}
+nav.scrolled .nav-links a::after{background:linear-gradient(90deg,#5b58a0,#7c79c8)}
+.nav-links a:hover{opacity:1}
+.nav-links a:hover::after{width:100%}
+.nav-cta{
+  padding:10px 20px;border-radius:30px;font-size:13px;font-weight:600;
+  background:linear-gradient(135deg,#5b58a0,#9d9ad6);color:#fff;box-shadow:0 8px 22px rgba(74,71,112,.45);transition:.3s;
+}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(157,154,214,.5)}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.burger span{width:26px;height:2px;background:currentColor;border-radius:2px}
+
+/* hero (índigo suave) */
+.hero{
+  position:relative;min-height:100vh;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:50px;
+  padding:120px 6vw 80px;overflow:hidden;
+  background:linear-gradient(160deg,#34315c 0%,#2c2950 55%,#3a3668 100%);
+}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(110px);opacity:.55;z-index:0}
+.hero::before{width:45vw;height:45vw;left:-10vw;top:-12vw;background:radial-gradient(circle,#6f6cae,transparent 62%);animation:float1 18s ease-in-out infinite}
+.hero::after{width:42vw;height:42vw;right:-12vw;bottom:-14vw;background:radial-gradient(circle,#9d9ad6,transparent 62%);animation:float2 22s ease-in-out infinite}
+@keyframes float1{50%{transform:translate(10vw,8vh) scale(1.15)}}
+@keyframes float2{50%{transform:translate(-8vw,-7vh) scale(1.2)}}
+.hero-text,.hero-media{position:relative;z-index:2}
+.hero-text{max-width:600px}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;border-radius:30px;background:rgba(255,255,255,.08);border:1px solid rgba(214,212,246,.25);font-size:12.5px;color:#d6d4f6;margin-bottom:26px;backdrop-filter:blur(8px);font-weight:600;letter-spacing:.04em}
+.badge .dot{width:7px;height:7px;border-radius:50%;background:#7ee787;box-shadow:0 0 10px #7ee787}
+.hero h1{font-size:clamp(2.5rem,5.2vw,4.6rem);font-weight:700;line-height:1.04;color:#fff}
+.hero h1 .grad{background:linear-gradient(120deg,#c6c4f2,#9d9ad6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:50ch;color:#c3c1de;font-size:clamp(1rem,1.4vw,1.16rem);margin:24px 0 34px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-primary{padding:15px 30px;border-radius:34px;font-weight:600;font-size:15px;background:linear-gradient(135deg,#6f6cae,#c6c4f2);color:#211f3a;box-shadow:0 12px 30px rgba(0,0,0,.3);transition:.3s;cursor:pointer;border:none}
+.btn-primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 18px 42px rgba(157,154,214,.5)}
+.btn-ghost{padding:15px 30px;border-radius:34px;font-weight:600;font-size:15px;background:rgba(255,255,255,.08);border:1px solid rgba(214,212,246,.3);color:#fff;backdrop-filter:blur(8px);transition:.3s;cursor:pointer}
+.btn-ghost:hover{border-color:#c6c4f2;transform:translateY(-3px)}
+
+/* hero media collage */
+.hero-media{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:215px;gap:16px}
+.tile{border-radius:22px;overflow:hidden;position:relative;border:1px solid rgba(214,212,246,.22);box-shadow:0 22px 50px rgba(15,12,30,.45);background:#2c2950}
+.tile img,.tile video{width:100%;height:100%;object-fit:cover;display:block}
+.tile.tall{grid-row:span 2}
+.tile::after{content:"";position:absolute;inset:0;background:linear-gradient(160deg,transparent 55%,rgba(20,16,40,.5));pointer-events:none}
+.tile .tag{position:absolute;left:14px;bottom:13px;z-index:2;font-size:12px;font-weight:600;color:#fff;background:rgba(49,47,78,.72);backdrop-filter:blur(6px);padding:5px 12px;border-radius:20px;border:1px solid rgba(214,212,246,.25)}
+.float-a{animation:floatY 6s ease-in-out infinite}
+.float-b{animation:floatY 7.5s ease-in-out infinite .8s}
+@keyframes floatY{50%{transform:translateY(-12px)}}
+.play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center;color:#312F4E;font-size:18px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.media-chip{position:absolute;left:-22px;bottom:24px;z-index:5;display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:18px;background:rgba(36,32,60,.9);backdrop-filter:blur(12px);border:1px solid rgba(214,212,246,.22);box-shadow:0 18px 40px rgba(0,0,0,.4)}
+.media-chip .n{font-family:'Space Grotesk';font-size:1.5rem;font-weight:700;color:#d6d4f6}
+.media-chip .t{font-size:12px;color:#b0adce;line-height:1.3}
+
+/* marquee chips (transición clara) */
+.marquee{padding:24px 0;overflow:hidden;background:#efeef8;border-bottom:1px solid rgba(49,47,78,.1)}
+.marquee-track{display:inline-flex;gap:16px;white-space:nowrap;animation:marq 26s linear infinite;will-change:transform}
+.chip{display:inline-flex;align-items:center;gap:11px;padding:13px 26px;border-radius:40px;background:#fff;border:1px solid rgba(49,47,78,.12);box-shadow:0 6px 18px rgba(49,47,78,.06);font-family:'Space Grotesk';font-weight:600;font-size:1.02rem;color:#312F4E}
+.chip .d{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#5b58a0,#9d9ad6)}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* sections */
+section{padding:110px 6vw;position:relative}
+.sec-head{text-align:center;max-width:680px;margin:0 auto 60px}
+.sec-tag{font-size:13px;color:var(--accent);letter-spacing:.25em;text-transform:uppercase;font-weight:700;margin-bottom:14px}
+.sec-head h2{font-size:clamp(2rem,4.5vw,3.2rem);font-weight:700;line-height:1.08}
+.sec-head p{color:var(--muted);margin-top:16px;font-size:1.05rem}
+
+/* services */
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;max-width:1200px;margin:0 auto}
+.card{background:var(--card-bg);border:1px solid var(--glass-brd);border-radius:22px;padding:34px 30px;backdrop-filter:blur(12px);transition:.4s;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.card::before{content:"";position:absolute;inset:0;border-radius:22px;padding:1.5px;background:linear-gradient(135deg,var(--accent),transparent 55%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:.4s}
+.card:hover{transform:translateY(-8px)}
+.card:hover::before{opacity:1}
+.card .ico{width:56px;height:56px;border-radius:15px;display:grid;place-items:center;font-size:24px;margin-bottom:22px;color:#fff;background:linear-gradient(135deg,#4a4770,#9d9ad6);box-shadow:0 10px 24px rgba(74,71,112,.35)}
+.card h3{font-size:1.3rem;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.96rem}
+
+/* stats */
+.stats{display:flex;flex-wrap:wrap;justify-content:center;gap:18px;max-width:1100px;margin:70px auto 0}
+.stat{flex:1;min-width:200px;text-align:center;padding:30px;border-radius:20px;background:var(--card-bg);border:1px solid var(--glass-brd);box-shadow:var(--shadow)}
+.stat .num{font-family:'Space Grotesk';font-size:2.8rem;font-weight:700;background:linear-gradient(120deg,#5b58a0,#9d9ad6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{color:var(--muted);font-size:.9rem;margin-top:6px}
+
+/* portfolio */
+.port-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;max-width:1200px;margin:0 auto}
+.port{position:relative;border-radius:20px;overflow:hidden;height:320px;border:1px solid var(--glass-brd);cursor:pointer;box-shadow:var(--shadow)}
+.port img{width:100%;height:100%;object-fit:cover;transition:.6s}
+.port .overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:26px;background:linear-gradient(transparent,rgba(20,16,40,.88));transition:.4s;color:#fff}
+.port .cat{font-size:12px;color:#d6d4f6;letter-spacing:.15em;text-transform:uppercase;margin-bottom:6px;opacity:0;transform:translateY(10px);transition:.4s}
+.port h3{font-size:1.35rem;color:#fff}
+.port:hover img{transform:scale(1.1)}
+.port:hover .cat{opacity:1;transform:translateY(0)}
+
+/* team */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;max-width:1100px;margin:0 auto}
+.member{text-align:center;padding:34px 24px;border-radius:22px;background:var(--card-bg);border:1px solid var(--glass-brd);box-shadow:var(--shadow);transition:.4s}
+.member:hover{transform:translateY(-8px)}
+.member .av{width:96px;height:96px;border-radius:50%;margin:0 auto 18px;display:grid;place-items:center;font-family:'Space Grotesk';font-size:2rem;font-weight:700;color:#fff;box-shadow:0 12px 28px rgba(74,71,112,.35)}
+.member:nth-child(1) .av{background:linear-gradient(135deg,#4a4770,#9d9ad6)}
+.member:nth-child(2) .av{background:linear-gradient(135deg,#5b5890,#c6c4f2)}
+.member:nth-child(3) .av{background:linear-gradient(135deg,#3a3860,#8b88bd)}
+.member:nth-child(4) .av{background:linear-gradient(135deg,#4a4770,#a9a6e0)}
+.member h3{font-size:1.2rem}
+.member .role{color:var(--accent);font-size:.9rem;margin-top:4px;font-weight:600}
+.member p{color:var(--muted);font-size:.85rem;margin-top:12px}
+
+/* contact (índigo suave) */
+.contact{background:linear-gradient(160deg,#34315c,#2c2950)}
+.contact-wrap{max-width:1050px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.contact-info h2{font-size:clamp(2rem,4vw,3rem);line-height:1.05;margin-bottom:18px}
+.contact-info h2 .grad{background:linear-gradient(120deg,#c6c4f2,#9d9ad6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.contact-info p{color:var(--muted);margin-bottom:28px}
+.contact-info .item{display:flex;align-items:center;gap:14px;margin-bottom:16px;color:var(--text)}
+.contact-info .item .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,#4a4770,#9d9ad6);color:#fff;font-size:17px;box-shadow:0 8px 18px rgba(0,0,0,.3)}
+form{background:var(--glass);border:1px solid var(--glass-brd);border-radius:24px;padding:34px;backdrop-filter:blur(14px)}
+form label{display:block;font-size:13px;color:var(--muted);margin-bottom:7px;margin-top:18px;font-weight:500}
+form label:first-child{margin-top:0}
+form input,form textarea{width:100%;padding:13px 16px;border-radius:12px;border:1px solid var(--glass-brd);background:rgba(20,16,40,.35);color:var(--text);font-family:inherit;font-size:14px;transition:.3s}
+form input::placeholder,form textarea::placeholder{color:#8a87aa}
+form input:focus,form textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(157,154,214,.18)}
+form textarea{resize:vertical;min-height:110px}
+form button{width:100%;margin-top:24px;padding:15px;border:none;border-radius:14px;font-weight:600;font-size:15px;cursor:pointer;background:linear-gradient(135deg,#6f6cae,#c6c4f2);color:#211f3a;box-shadow:0 12px 28px rgba(0,0,0,.3);transition:.3s}
+form button:hover{transform:translateY(-2px);box-shadow:0 18px 38px rgba(157,154,214,.5)}
+
+/* footer */
+footer{padding:50px 6vw 36px;border-top:1px solid var(--glass-brd);text-align:center;background:#262345}
+.footer-logo{font-family:'Space Grotesk';font-size:28px;font-weight:700;margin-bottom:16px;color:#fff}
+.footer-logo span{background:linear-gradient(120deg,#c6c4f2,#9d9ad6);-webkit-background-clip:text;background-clip:text;color:transparent}
+footer .desc{color:var(--muted);max-width:46ch;margin:0 auto}
+.socials{display:flex;gap:14px;justify-content:center;margin:20px 0}
+.socials a{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--glass);border:1px solid var(--glass-brd);transition:.3s;font-size:14px;font-weight:600;color:#d6d4f6}
+.socials a:hover{background:linear-gradient(135deg,#4a4770,#9d9ad6);color:#fff;transform:translateY(-3px)}
+.copy{color:var(--muted);font-size:13px;margin-top:14px}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(40px);transition:.8s cubic-bezier(.2,.7,.2,1)}
+.reveal.show{opacity:1;transform:none}
+.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}.reveal.d4{transition-delay:.4s}.reveal.d5{transition-delay:.5s}
+
+@media(max-width:960px){
+  .hero{grid-template-columns:1fr;text-align:center;padding-top:110px}
+  .hero-text{margin:0 auto}
+  .hero p{margin-left:auto;margin-right:auto}
+  .hero-btns{justify-content:center}
+  .media-chip{left:50%;transform:translateX(-50%);bottom:-22px}
+}
+@media(max-width:860px){
+  .nav-links,.nav-cta{display:none}
+  .burger{display:flex}
+  .nav-links.open{display:flex;position:absolute;top:60px;left:0;right:0;flex-direction:column;padding:24px 6vw;background:rgba(255,255,255,.97);border-bottom:1px solid rgba(49,47,78,.12);gap:20px;color:#26243d}
+  .contact-wrap{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="logo">
+    <svg class="mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="echar raíces">
+      <circle cx="24" cy="24" r="23" fill="#312F4E" stroke="#9d9ad6" stroke-width="1.2"/>
+      <path d="M24 11c0 5-4 7-4 12 0 3 1.7 5 4 5s4-2 4-5c0-5-4-7-4-12z" fill="#fff"/>
+      <path d="M24 28c0 4 0 6 0 9M24 30c-3-1-5-3-8-3M24 32c3-1 5-3 8-3M24 34c-2.5-.5-4-2-6.5-2M24 36c2.5-.5 4-2 6.5-2" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+    <span><b>echar</b> <i>raíces</i></span>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <a href="#servicios">Servicios</a>
+    <a href="#portafolio">Portafolio</a>
+    <a href="#equipo">Equipo</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+  <a href="#contacto" class="nav-cta">Empezar proyecto</a>
+  <div class="burger" id="burger"><span></span><span></span><span></span></div>
+</nav>
+
+<header class="hero dark">
+  <div class="hero-text">
+    <div class="badge reveal show"><span class="dot"></span> Agencia creativa · Disponible 2026</div>
+    <h1 class="reveal show">Hacemos que tu marca <span class="grad">eche raíces</span></h1>
+    <p class="reveal show d1">Estrategia, diseño y campañas que conectan con las personas — y que se notan en los números. Llevamos tu presencia online a la altura de tu servicio.</p>
+    <div class="hero-btns reveal show d2">
+      <a href="#contacto" class="btn-primary">Hablemos de tu marca</a>
+      <a href="#portafolio" class="btn-ghost">▶ Ver showreel</a>
+    </div>
+  </div>
+
+  <div class="hero-media reveal show d1">
+    <!-- Reemplaza los src por tus propias imágenes/videos -->
+    <div class="tile tall float-a">
+      <img src="https://picsum.photos/seed/brand7/600/900" alt="Proyecto de branding">
+      <span class="tag">Branding</span>
+    </div>
+    <div class="tile float-b">
+      <video autoplay muted loop playsinline poster="https://picsum.photos/seed/reel3/600/500">
+        <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+      </video>
+      <div class="play">▶</div>
+      <span class="tag">Showreel</span>
+    </div>
+    <div class="tile float-a">
+      <img src="https://picsum.photos/seed/social9/600/500" alt="Contenido para redes">
+      <span class="tag">Social Media</span>
+    </div>
+    <div class="media-chip">
+      <div class="n">+120</div>
+      <div class="t">proyectos<br>lanzados</div>
+    </div>
+  </div>
+</header>
+
+<div class="marquee">
+  <div class="marquee-track" id="track">
+    <span class="chip"><span class="d"></span>Branding</span>
+    <span class="chip"><span class="d"></span>Diseño Web</span>
+    <span class="chip"><span class="d"></span>Social Media</span>
+    <span class="chip"><span class="d"></span>Performance Ads</span>
+    <span class="chip"><span class="d"></span>Producción Audiovisual</span>
+    <span class="chip"><span class="d"></span>Marketing Digital</span>
+    <span class="chip"><span class="d"></span>Estrategia</span>
+  </div>
+</div>
+
+<section id="servicios">
+  <div class="sec-head reveal">
+    <div class="sec-tag">Servicios</div>
+    <h2>Todo lo que tu marca necesita para destacar</h2>
+    <p>Un equipo, todas las disciplinas. De la idea al impacto medible.</p>
+  </div>
+  <div class="services-grid">
+    <div class="card reveal d1"><div class="ico">✦</div><h3>Branding & Identidad</h3><p>Creamos identidades visuales con personalidad: logo, sistema gráfico y voz de marca coherente en cada punto de contacto.</p></div>
+    <div class="card reveal d2"><div class="ico">◎</div><h3>Social Media</h3><p>Estrategia de contenido, gestión de comunidades y creatividades que detienen el scroll y generan conversación.</p></div>
+    <div class="card reveal d3"><div class="ico">⚡</div><h3>Performance Ads</h3><p>Campañas en Meta, Google y TikTok optimizadas al detalle para maximizar cada euro invertido en resultados reales.</p></div>
+    <div class="card reveal d1"><div class="ico">▢</div><h3>Diseño Web & UX</h3><p>Sitios y landings rápidas, atractivas y diseñadas para convertir, con la estética actual que tu audiencia espera.</p></div>
+    <div class="card reveal d2"><div class="ico">◈</div><h3>Producción Audiovisual</h3><p>Foto, video y motion graphics que cuentan tu historia y elevan la percepción de tu marca.</p></div>
+    <div class="card reveal d3"><div class="ico">◐</div><h3>Estrategia & Data</h3><p>Decisiones basadas en datos: analítica, A/B testing y reporting claro para crecer sobre evidencia, no intuición.</p></div>
+  </div>
+  <div class="stats">
+    <div class="stat reveal d1"><div class="num" data-target="120">0</div><div class="lbl">Proyectos lanzados</div></div>
+    <div class="stat reveal d2"><div class="num" data-target="48">0</div><div class="lbl">Marcas activas</div></div>
+    <div class="stat reveal d3"><div class="num" data-target="320">0</div><div class="lbl">% ROI promedio</div></div>
+    <div class="stat reveal d4"><div class="num" data-target="9">0</div><div class="lbl">Años creando</div></div>
+  </div>
+</section>
+
+<section id="portafolio">
+  <div class="sec-head reveal">
+    <div class="sec-tag">Portafolio</div>
+    <h2>Trabajo del que estamos orgullosos</h2>
+    <p>Una selección de campañas y proyectos recientes.</p>
+  </div>
+  <div class="port-grid">
+    <div class="port reveal d1"><img src="https://picsum.photos/seed/p1/600/600" alt=""><div class="overlay"><div class="cat">Branding</div><h3>Nova Coffee Co.</h3></div></div>
+    <div class="port reveal d2"><img src="https://picsum.photos/seed/p2/600/600" alt=""><div class="overlay"><div class="cat">Performance</div><h3>FitPro App</h3></div></div>
+    <div class="port reveal d3"><img src="https://picsum.photos/seed/p3/600/600" alt=""><div class="overlay"><div class="cat">Social Media</div><h3>Aura Cosmetics</h3></div></div>
+    <div class="port reveal d1"><img src="https://picsum.photos/seed/p4/600/600" alt=""><div class="overlay"><div class="cat">Diseño Web</div><h3>Horizon Bank</h3></div></div>
+    <div class="port reveal d2"><img src="https://picsum.photos/seed/p5/600/600" alt=""><div class="overlay"><div class="cat">Contenido</div><h3>Vibe Festival</h3></div></div>
+    <div class="port reveal d3"><img src="https://picsum.photos/seed/p6/600/600" alt=""><div class="overlay"><div class="cat">Campaña 360</div><h3>EcoMove</h3></div></div>
+  </div>
+</section>
+
+<section id="equipo">
+  <div class="sec-head reveal">
+    <div class="sec-tag">Equipo</div>
+    <h2>Las mentes detrás de echar raíces</h2>
+    <p>Creativos, estrategas y nerds de los datos en un mismo equipo.</p>
+  </div>
+  <div class="team-grid">
+    <div class="member reveal d1"><div class="av">SR</div><h3>Sofía Reyes</h3><div class="role">Directora Creativa</div><p>Lidera la visión estética de cada proyecto.</p></div>
+    <div class="member reveal d2"><div class="av">MT</div><h3>Mateo Torres</h3><div class="role">Head of Performance</div><p>Obsesionado con el ROI y la optimización.</p></div>
+    <div class="member reveal d3"><div class="av">LV</div><h3>Lucía Vega</h3><div class="role">Social Media Lead</div><p>Conecta marcas con sus comunidades.</p></div>
+    <div class="member reveal d4"><div class="av">DC</div><h3>Diego Castro</h3><div class="role">Diseñador & UX</div><p>Convierte ideas en interfaces memorables.</p></div>
+  </div>
+</section>
+
+<section id="contacto" class="contact dark">
+  <div class="contact-wrap">
+    <div class="contact-info reveal d1">
+      <div class="sec-tag">Contacto</div>
+      <h2>¿List@ para <span class="grad">crecer</span>?</h2>
+      <p>Cuéntanos sobre tu marca y te respondemos en menos de 24 horas con ideas concretas.</p>
+      <div class="item"><div class="ic">✉</div> hola@echarraices.es</div>
+      <div class="item"><div class="ic">☎</div> +34 621 058 388</div>
+      <div class="item"><div class="ic">⌖</div> España</div>
+    </div>
+    <form class="reveal d2" onsubmit="enviar(event)">
+      <label>Nombre</label>
+      <input type="text" placeholder="Tu nombre" required>
+      <label>Email</label>
+      <input type="email" placeholder="tu@email.com" required>
+      <label>¿En qué te ayudamos?</label>
+      <textarea placeholder="Cuéntanos sobre tu proyecto..." required></textarea>
+      <button type="submit">Enviar mensaje →</button>
+    </form>
+  </div>
+</section>
+
+<footer class="dark">
+  <div class="footer-logo">echar <span>raíces</span></div>
+  <p class="desc">Agencia de publicidad creativa que ayuda a las marcas a echar raíces y crecer en la era digital.</p>
+  <div class="socials">
+    <a href="#">in</a><a href="#">ig</a><a href="#">be</a><a href="#">tt</a>
+  </div>
+  <div class="copy">© 2026 echar raíces. Todos los derechos reservados.</div>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40));
+
+const burger=document.getElementById('burger'),navLinks=document.getElementById('navLinks');
+burger.addEventListener('click',()=>navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open')));
+
+const track=document.getElementById('track');
+track.innerHTML+=track.innerHTML;
+
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}});
+},{threshold:.15});
+document.querySelectorAll('.reveal:not(.show)').forEach(el=>io.observe(el));
+
+const statIO=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const el=e.target,target=+el.dataset.target;let n=0;
+      const step=()=>{n+=Math.ceil(target/45);if(n>=target){el.textContent=target}else{el.textContent=n;requestAnimationFrame(step)}};
+      step();statIO.unobserve(el);
+    }
+  });
+},{threshold:.6});
+document.querySelectorAll('.num').forEach(el=>statIO.observe(el));
+
+function enviar(e){
+  e.preventDefault();
+  const b=e.target.querySelector('button');
+  b.textContent='¡Gracias! Te contactaremos pronto ✓';
+  b.style.background='linear-gradient(135deg,#16a34a,#22c55e)';
+  e.target.reset();
+  setTimeout(()=>{b.textContent='Enviar mensaje →';b.style.background='';},3500);
+}
+</script>
+</body>
+</html>
