@@ -103,6 +103,12 @@ nav.scrolled .nav-links a::after{background:linear-gradient(90deg,#5b58a0,#7c79c
 .media-chip .n{font-family:'Space Grotesk';font-size:1.5rem;font-weight:700;color:#d6d4f6}
 .media-chip .t{font-size:12px;color:#b0adce;line-height:1.3}
 
+/* indicador scroll del banner */
+.scroll-ind{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:4;font-size:11px;color:rgba(214,212,246,.72);letter-spacing:.22em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:9px;cursor:pointer;transition:.3s}
+.scroll-ind:hover{color:#fff}
+.scroll-ind .line{width:1px;height:44px;background:linear-gradient(#c6c4f2,transparent);animation:scrolldown 2s infinite}
+@keyframes scrolldown{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}50.1%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
 /* marquee tipográfico (transición clara) */
 .marquee{padding:30px 0;overflow:hidden;background:#efeef8;border-top:1px solid rgba(49,47,78,.07);border-bottom:1px solid rgba(49,47,78,.1)}
 .marquee-track{display:inline-flex;align-items:center;gap:30px;white-space:nowrap;animation:marq 32s linear infinite;will-change:transform}
@@ -198,6 +204,7 @@ footer .desc{color:var(--muted);max-width:46ch;margin:0 auto}
   .hero p{margin-left:auto;margin-right:auto}
   .hero-btns{justify-content:center}
   .media-chip{left:50%;transform:translateX(-50%);bottom:-22px}
+  .scroll-ind{display:none}
 }
 @media(max-width:860px){
   .nav-links,.nav-cta{display:none}
@@ -261,6 +268,8 @@ footer .desc{color:var(--muted);max-width:46ch;margin:0 auto}
       <div class="t">proyectos<br>lanzados</div>
     </div>
   </div>
+
+  <a href="#servicios" class="scroll-ind"><span>Scroll</span><span class="line"></span></a>
 </header>
 
 <div class="marquee">
@@ -366,6 +375,10 @@ footer .desc{color:var(--muted);max-width:46ch;margin:0 auto}
 </footer>
 
 <script>
+// evita que al recargar la página salte hacia abajo
+if('scrollRestoration' in history){history.scrollRestoration='manual';}
+window.addEventListener('load',()=>window.scrollTo(0,0));
+
 const nav=document.getElementById('nav');
 addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40));
 
